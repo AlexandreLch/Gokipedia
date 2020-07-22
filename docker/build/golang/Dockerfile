@@ -13,20 +13,20 @@ RUN apk update && apk upgrade && \
 # Add Maintainer Info
 LABEL maintainer="Equipe 01 - Hetic"
 
-WORKDIR /go/src/gokipedia
-COPY app/go.sum app/go.mod /go/src/gokipedia/
+WORKDIR /go/gokipedia
+COPY go.sum go.mod /go/gokipedia/
 
 # Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-COPY app /go/src/gokipedia/
+COPY . /go/gokipedia/
 
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/gokipedia .
 
 FROM alpine
 
-COPY --from=builder /go/src/gokipedia/bin/gokipedia /
+COPY --from=builder /go/gokipedia/bin/gokipedia /
 
 EXPOSE 8080
 

@@ -31,7 +31,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./app:/go:rw
+      - ./:/go:rw
     networks:
       - backend
 
