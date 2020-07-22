@@ -49,3 +49,27 @@ func (repository *Repository) GetArticles() ([]*Article, error) {
 
 	return articles, nil
 }
+
+func (repository *Repository) GetArticleById(id uint64) (*Article, error) {
+	
+	row := repository.Conn.QueryRow("SELECT a.id, a.title, a.header, a.authors, a.created_on, " +
+	"a.updated_on FROM article a WHERE id=(?)", id)
+	var title, header, authors string
+	var createdOn, updatedOn time.Time
+	switch err := row.Scan(&id, &title, &header, &authors, &createdOn, &updatedOn); err {
+	case sql.ErrNoRows:
+		return nil, nil
+	case nil:
+		article := &Article{
+			ID:        id,
+			Title:     title,
+			Header:    header,
+			Authors:   authors,
+			CreatedOn: createdOn,
+			UpdatedOn: updatedOn,
+		}
+		return article, nil
+	default:
+		return nil, err
+	}
+}
