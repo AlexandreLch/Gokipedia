@@ -8,41 +8,38 @@
     * image_tag : links images to tags by ids (Many to Many relation)
 */
 
-CREATE TABLE api_user (
-    id BIGINT NOT NULL AUTO_INCREMENT, 
-    username VARCHAR(50),
-    email VARCHAR (255),
-    password VARCHAR(255),
+CREATE TABLE article (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, 
+    title VARCHAR(255),
+    header TEXT,
+    authors TEXT,
+    created_on DATETIME,
+    updated_on DATETIME,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE mailing_list (
-    id BIGINT NOT NULL AUTO_INCREMENT, 
-    name VARCHAR(50),
-    description TEXT,
-    PRIMARY KEY(id)
+CREATE TABLE section (
+     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+     title VARCHAR(255),
+     paragraph TEXT,
+     position INT UNSIGNED NOT NULL,
+     media TEXT,
+     created_on DATETIME,
+     updated_on DATETIME,
+     parent_id BIGINT UNSIGNED DEFAULT NULL, 
+     article_id BIGINT UNSIGNED NOT NULL,
+     PRIMARY KEY (id),
+     UNIQUE KEY position (position, article_id),
+     FOREIGN KEY (article_id) REFERENCES article(id) ON DELETE CASCADE, 
+     FOREIGN KEY (parent_id) REFERENCES section(id) ON DELETE CASCADE
 );
 
-CREATE TABLE recipient (
-    id BIGINT NOT NULL AUTO_INCREMENT, 
-    email VARCHAR(255),
-    first_name VARCHAR(50) DEFAULT "",
-    last_name VARCHAR(50) DEFAULT "",
-    username VARCHAR(50) DEFAULT "",
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE recipient_mailing_list (
-    id_recipient BIGINT NOT NULL,
-    id_mailing_list BIGINT NOT NULL
-);
-
-CREATE TABLE campaign (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) DEFAULT "",
-    description TEXT,
-    template_name VARCHAR(255) DEFAULT "",
-    template_path VARCHAR(255) DEFAULT "",
-    id_mailing_list BIGINT NOT NULL,
-    PRIMARY KEY(id)
+CREATE TABLE comment (
+     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+     title VARCHAR(255),
+     content TEXT,
+     author INT UNSIGNED NOT NULL,
+     created_on DATETIME,
+     updated_on DATETIME,
+     PRIMARY KEY (id)
 );
