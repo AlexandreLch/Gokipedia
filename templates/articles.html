@@ -8,9 +8,8 @@
 <body>
   <h1>Ceci est la liste de tous les articles</h1>
     {{ range $key, $value := . }}
-    {{ $value.Id }}
     <li>
-      <a href="/article/{{ $value.Id }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
+      <a href="/article/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
     </li>
 {{ end }}
 </body>
