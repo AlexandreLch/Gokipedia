@@ -11,8 +11,8 @@
 CREATE TABLE article (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, 
     title VARCHAR(255),
-    header TEXT,
-    authors TEXT,
+    header TEXT NOT NULL,
+    authors TEXT NOT NULL,
     created_on DATETIME,
     updated_on DATETIME,
     PRIMARY KEY (id)
@@ -43,3 +43,11 @@ CREATE TABLE comment (
      updated_on DATETIME,
      PRIMARY KEY (id)
 );
+
+/* 
+    Default values
+*/
+INSERT INTO `article` (`id`, `title`, `header`, `authors`, `created_on`, `updated_on`) VALUES
+('1', 'Bonjour', 'helloworld', 'AT', '2020-07-22 15:40:14', '2020-07-22 15:40:14'),
+('2', 'Bonsoir', 'byeworld', 'TA', '2020-07-22 15:40:37', '2020-07-22 15:40:37'),
+('3', 'Bonne nuit', 'good night world', 'Marchand de Sable', '2020-07-22 15:41:11', '2020-07-22 15:41:11');

@@ -13,7 +13,7 @@ var box = packr.New("templateBox", "../templates")
 
 func RenderHome(w http.ResponseWriter, r *http.Request) {
 	message := models.Message{Greeting: "Yo frr"}
-	tpl := template.New("home.html")                   // Create a template.
+	tpl := template.New("home.html") // Create a template.
 	path, _ := os.Getwd()
 	log.Print(path)
 	log.Printf("%+v", box)

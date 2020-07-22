@@ -5,4 +5,4 @@
 // and any other packr generated files.
 package controllers
 
-import _ "gokipedia/packrd"
+import _ "gokipedia/app/packrd"
