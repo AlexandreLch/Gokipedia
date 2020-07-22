@@ -6,8 +6,12 @@
   <title>Document</title>
 </head>
 <body>
-  {{ range $key, $value := . }}
-   <li><strong>{{ $key }}</strong>: {{ $value }}</li>
+  <h1>Ceci est la liste de tous les articles</h1>
+    {{ range $key, $value := . }}
+    {{ $value.Id }}
+    <li>
+      <a href="/article/{{ $value.Id }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
+    </li>
 {{ end }}
 </body>
 </html>

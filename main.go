@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gokipedia/app/database"
-	"gokipedia/app/router"
+	"gokipedia/database"
+	"gokipedia/router"
 	"log"
 	"net/http"
 )

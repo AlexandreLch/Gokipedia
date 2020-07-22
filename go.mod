@@ -1,4 +1,4 @@
-module gokipedia/app
+module gokipedia
 
 go 1.14
 

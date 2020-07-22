@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gobuffalo/packr/v2"
-	"gokipedia/app/models"
+	"gokipedia/models"
 	"html/template"
 	"log"
 	"net/http"
