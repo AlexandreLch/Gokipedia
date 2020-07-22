@@ -21,6 +21,10 @@ RUN go mod download
 
 COPY . /go/src/gokipedia/
 
+# Install and run packr
+RUN go get -u github.com/gobuffalo/packr/v2/packr2
+RUN packr2
+
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/gokipedia .
 
