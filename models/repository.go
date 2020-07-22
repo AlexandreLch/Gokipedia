@@ -50,10 +50,9 @@ func (repository *Repository) GetArticles() ([]*Article, error) {
 	return articles, nil
 }
 
-func (repository *Repository) GetArticleById(id uint64) (*Article, error) {
-	
-	row := repository.Conn.QueryRow("SELECT a.id, a.title, a.header, a.authors, a.created_on, " +
-	"a.updated_on FROM article a WHERE id=(?)", id)
+func (repository *Repository) GetArticleByID(id uint64) (*Article, error) {
+	row := repository.Conn.QueryRow("SELECT a.id, a.title, a.header, a.authors, a.created_on, "+
+		"a.updated_on FROM article a WHERE id=(?)", id)
 	var title, header, authors string
 	var createdOn, updatedOn time.Time
 	switch err := row.Scan(&id, &title, &header, &authors, &createdOn, &updatedOn); err {

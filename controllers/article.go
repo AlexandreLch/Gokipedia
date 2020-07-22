@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"github.com/gorilla/mux"
 	"gokipedia/database"
+	"gokipedia/helpers"
 	"gokipedia/models"
 	"html/template"
 	"log"
@@ -15,11 +17,11 @@ func RenderArticles(w http.ResponseWriter, r *http.Request) {
 
 	articlesData, err := repository.GetArticles()
 	if err != nil {
-			log.Printf("could not get article list: %v", err)
-			return
+		log.Printf("could not get article list: %v", err)
+		return
 	}
 
-	tpl := template.New("articles.html")   
+	tpl := template.New("articles.html")
 	path, _ := os.Getwd()
 	log.Print(path)
 	log.Printf("%+v", box)
@@ -44,15 +46,19 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}
 
-	muxVars = mux.Vars
+	muxVars := mux.Vars(r)
 
-	articlesData, err := repository.GetArticleById(muxVars["id"])
+	strID := muxVars["id"]
+
+	intID, err := helpers.ParseUInt64(strID)
+
+	articleData, err := repository.GetArticleByID(intID)
 	if err != nil {
-			log.Printf("could not get article list: %v", err)
-			return
+		log.Printf("could not get article list: %v", err)
+		return
 	}
-	
-	tpl := template.New("article.html")   
+
+	tpl := template.New("article.html")
 	path, _ := os.Getwd()
 	log.Print(path)
 	log.Printf("%+v", box)
