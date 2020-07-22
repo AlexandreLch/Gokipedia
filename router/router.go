@@ -40,4 +40,10 @@ var routes = Routes{
 		Pattern:     "/",
 		HandlerFunc: controllers.RenderHome,
 	},
+	Route{
+		Name:        "Get all articles",
+		Method:      "GET",
+		Pattern:     "/articles",
+		HandlerFunc: controllers.RenderArticles,
+	},
 }
