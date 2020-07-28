@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
 	"gokipedia/database"
 	"gokipedia/helpers"
 	"gokipedia/models"
@@ -9,8 +10,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 )
+
+var decoder = schema.NewDecoder()
 
 func RenderArticles(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
@@ -116,13 +118,25 @@ func SaveArticle(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}
 
-	r.ParseForm()
-	article := models.Article{
-		Title:     r.Form["title"],
-		Header:    r.Form["header"],
-		Authors:   "",
-		CreatedOn: time.Time{},
-		UpdatedOn: time.Time{},
-		Sections:  nil,
+	err := r.ParseForm()
+	if err != nil {
+		log.Printf("could not parse form: %v", err)
+		return
 	}
+
+	var article models.Article
+
+	err = decoder.Decode(&article, r.PostForm)
+	if err != nil {
+		log.Printf("could not decode form into article: %v", err)
+		return
+	}
+
+	err = repository.SaveArticle(&article)
+	if err != nil {
+		log.Printf("could not save article: %v", err)
+		return
+	}
+
+	log.Print("article saved")
 }
