@@ -73,6 +73,49 @@ func (repository *Repository) GetArticleByID(id uint64) (*Article, error) {
 	}
 }
 
+func (repository *Repository) GetArticleContentByID(id uint64) ([]*Section, error) {
+	rows, err := repository.Conn.Query("SELECT s.id, s.title, s.paragraph, s.position, s.media, "+
+		"s.created_on, s.updated_on, s.parent_id FROM section s WHERE article_id=(?)", id)
+	if err != nil {
+		return nil, fmt.Errorf("could not prepare query: %v", err)
+	}
+
+	var sections []*Section
+	var title, paragraph, media string
+	var position, parentID uint64
+	var createdOn, updatedOn time.Time
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&id, &title, &paragraph, &position, &media, &createdOn, &updatedOn, &parentID)
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		if err != nil {
+			return nil, fmt.Errorf("could not get sections : %v", err)
+		}
+
+		section := &Section{
+			ID:        	id,
+			Title:     	title,
+			Paragraph:    	paragraph,
+			Position:   	position,
+			Media: 			media,
+			CreatedOn: 	createdOn,
+			UpdatedOn: 	updatedOn,
+			ParentID: 	parentID,
+		}
+
+		sections = append(sections, section)
+	}
+
+	err = rows.Err()
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	return sections, nil
+}
+
 func (repository *Repository) SaveArticle(article *Article) error {
 	stmt, err := repository.Conn.Prepare("INSERT INTO article(title, header, authors, created_on," +
 		"updated_on) VALUES(?,?,?,?,?)")

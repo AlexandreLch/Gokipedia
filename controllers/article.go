@@ -54,9 +54,17 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 
 	articleData, err := repository.GetArticleByID(intID)
 	if err != nil {
-		log.Printf("could not get article list: %v", err)
+		log.Printf("could not get article data: %v", err)
 		return
 	}
+
+	articleSections, err := repository.GetArticleContentByID(intID)
+	if err != nil {
+		log.Printf("could not get article content: %v", err)
+		return
+	}
+
+	articleData.Sections = articleSections
 
 	tpl := template.New("article.html")
 	path, _ := os.Getwd()

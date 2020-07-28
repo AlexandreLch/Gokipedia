@@ -8,6 +8,10 @@
 <body>
   <h1>Ceci est la page pour un article</h1>
 
-  <p>{{ .Title }}</p>
+  <h2>{{ .Title }}</h2>
+  <p>{{ .Header }}</p>
+  {{range .Sections }}
+  {{ content := .paragraph}}
+  <p>{{content}}</p>
 </body>
 </html>
