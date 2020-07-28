@@ -95,14 +95,14 @@ func (repository *Repository) GetArticleContentByID(id uint64) ([]*Section, erro
 		}
 
 		section := &Section{
-			ID:        	id,
-			Title:     	title,
-			Paragraph:    	paragraph,
-			Position:   	position,
-			Media: 			media,
-			CreatedOn: 	createdOn,
-			UpdatedOn: 	updatedOn,
-			ParentID: 	parentID,
+			ID:        id,
+			Title:     title,
+			Paragraph: paragraph,
+			Position:  position,
+			Media:     media,
+			CreatedOn: createdOn,
+			UpdatedOn: updatedOn,
+			ParentID:  parentID,
 		}
 
 		sections = append(sections, section)

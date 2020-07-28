@@ -10,8 +10,9 @@
 
   <h2>{{ .Title }}</h2>
   <p>{{ .Header }}</p>
-  {{range .Sections }}
-  {{ content := .paragraph}}
-  <p>{{content}}</p>
+  {{range $key, $value := .Sections }}
+  <p>{{$value.Title}}</p>
+  <p>{{$value.Paragraph}}</p>
+  {{ end }}
 </body>
 </html>
