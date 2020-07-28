@@ -13,20 +13,24 @@ RUN apk update && apk upgrade && \
 # Add Maintainer Info
 LABEL maintainer="Equipe 01 - Hetic"
 
-WORKDIR /go/gokipedia
-COPY go.sum go.mod /go/gokipedia/
+WORKDIR /go/src/gokipedia
+COPY go.sum go.mod /go/src/gokipedia/
 
 # Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-COPY . /go/gokipedia/
+COPY . /go/src/gokipedia/
+
+# Install and run packr
+RUN go get -u github.com/gobuffalo/packr/v2/packr2
+RUN packr2
 
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/gokipedia .
 
 FROM alpine
 
-COPY --from=builder /go/gokipedia/bin/gokipedia /
+COPY --from=builder /go/src/gokipedia/bin/gokipedia /
 
 EXPOSE 8080
 

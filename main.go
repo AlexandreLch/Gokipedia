@@ -1,16 +1,24 @@
 package main
 
 import (
-	"gokipedia/app/router"
+	"gokipedia/database"
+	"gokipedia/router"
 	"log"
 	"net/http"
 )
 
 func main() {
-	newRouter := router.NewRouter()
 	port := "8080"
+	newRouter := router.NewRouter()
+
+	err := database.Connect()
+	if err != nil {
+		log.Fatalf("could not connect to db: %v", err)
+	}
+
 	log.Print("\nServer started on port " + port)
-	err := http.ListenAndServe(":"+port, newRouter)
+
+	err = http.ListenAndServe(":"+port, newRouter)
 	if err != nil {
 		log.Fatalf("could not serve on port %s", port)
 	}

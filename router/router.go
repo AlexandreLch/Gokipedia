@@ -2,7 +2,7 @@ package router
 
 import (
 	"github.com/gorilla/mux"
-	"gokipedia/app/controllers"
+	"gokipedia/controllers"
 	"net/http"
 )
 
@@ -39,5 +39,29 @@ var routes = Routes{
 		Method:      "GET",
 		Pattern:     "/",
 		HandlerFunc: controllers.RenderHome,
+	},
+	Route{
+		Name:        "Get all articles",
+		Method:      "GET",
+		Pattern:     "/articles",
+		HandlerFunc: controllers.RenderArticles,
+	},
+	Route{
+		Name:        "Add an article",
+		Method:      "GET",
+		Pattern:     "/articles/new",
+		HandlerFunc: controllers.RenderArticleForm,
+	},
+	Route{
+		Name:        "Add an article",
+		Method:      "POST",
+		Pattern:     "/articles/new",
+		HandlerFunc: controllers.SaveArticle,
+	},
+	Route{
+		Name:        "Get an article",
+		Method:      "GET",
+		Pattern:     "/articles/{id}",
+		HandlerFunc: controllers.RenderArticle,
 	},
 }
