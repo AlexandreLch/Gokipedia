@@ -72,3 +72,64 @@ func (repository *Repository) GetArticleByID(id uint64) (*Article, error) {
 		return nil, err
 	}
 }
+
+func (repository *Repository) SaveArticle(article *Article) error {
+	stmt, err := repository.Conn.Prepare("INSERT INTO article(title, header, authors, created_on," +
+		"updated_on) VALUES(?,?,?,?,?)")
+	if err != nil {
+		return err
+	}
+
+	article.CreatedOn = time.Now()
+	article.UpdatedOn = time.Now()
+
+	res, errExec := stmt.Exec(article.Title, article.Header, article.Authors, article.CreatedOn,
+		article.UpdatedOn)
+	if errExec != nil {
+		return fmt.Errorf("could not exec stmt: %v", errExec)
+	}
+
+	lastInsertedID, errInsert := res.LastInsertId()
+
+	if errInsert != nil {
+		return fmt.Errorf("could not retrieve last inserted ID: %v", errInsert)
+	}
+
+	article.ID = uint64(lastInsertedID)
+
+	return nil
+}
+
+func (repository *Repository) updateArticleByID(article *Article) error {
+	stmt, err := repository.Conn.Prepare("UPDATE article SET title=(?), header=(?), " +
+		"authors=(?), updated_on=(?) WHERE id=(?)")
+	if err != nil {
+		return err
+	}
+
+	article.UpdatedOn = time.Now()
+
+	_, errExec := stmt.Exec(article.Title, article.Header, article.Authors, article.UpdatedOn,
+		article.ID)
+
+	if errExec != nil {
+		return errExec
+	}
+
+	return nil
+}
+
+func (repository *Repository) deleteArticle(id uint64) (uint64, error) {
+
+	res, err := repository.Conn.Exec("DELETE FROM article WHERE id=(?)", id)
+	if err != nil {
+		return 0, err
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+
+	return uint64(rowsAffected), nil
+}
