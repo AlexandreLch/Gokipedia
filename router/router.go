@@ -47,9 +47,21 @@ var routes = Routes{
 		HandlerFunc: controllers.RenderArticles,
 	},
 	Route{
+		Name:        "Add an article",
+		Method:      "GET",
+		Pattern:     "/articles/new",
+		HandlerFunc: controllers.RenderArticleForm,
+	},
+	Route{
+		Name:        "Add an article",
+		Method:      "POST",
+		Pattern:     "/articles/new",
+		HandlerFunc: controllers.SaveArticle,
+	},
+	Route{
 		Name:        "Get an article",
 		Method:      "GET",
-		Pattern:     "/article/{id}",
+		Pattern:     "/articles/{id}",
 		HandlerFunc: controllers.RenderArticle,
 	},
 }

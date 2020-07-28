@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 func RenderArticles(w http.ResponseWriter, r *http.Request) {
@@ -64,7 +65,9 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	articleData.Sections = articleSections
+	if len(articleSections) > 0 {
+		articleData.Sections = articleSections
+	}
 
 	tpl := template.New("article.html")
 	path, _ := os.Getwd()
@@ -84,5 +87,42 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Print(err)
 		return
+	}
+}
+
+func RenderArticleForm(w http.ResponseWriter, r *http.Request) {
+	tpl := template.New("new-article.html")
+	path, _ := os.Getwd()
+	log.Print(path)
+	log.Printf("%+v", box)
+	articleForm, err := box.FindString("new-article.html")
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	t, err := tpl.Parse(articleForm) // Parse template file.
+	if err != nil {
+		log.Print(err)
+		return
+	}
+	err = t.Execute(w, nil) // merge.
+	if err != nil {
+		log.Print(err)
+		return
+	}
+}
+
+func SaveArticle(w http.ResponseWriter, r *http.Request) {
+	db := database.DbConn
+	repository := models.Repository{Conn: db}
+
+	r.ParseForm()
+	article := models.Article{
+		Title:     r.Form["title"],
+		Header:    r.Form["header"],
+		Authors:   "",
+		CreatedOn: time.Time{},
+		UpdatedOn: time.Time{},
+		Sections:  nil,
 	}
 }
