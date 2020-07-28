@@ -9,7 +9,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"os"
 )
 
 var decoder = schema.NewDecoder()
@@ -25,9 +24,6 @@ func RenderArticles(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tpl := template.New("articles.html")
-	path, _ := os.Getwd()
-	log.Print(path)
-	log.Printf("%+v", box)
 	articles, err := box.FindString("articles.html")
 	if err != nil {
 		log.Print(err)
@@ -72,9 +68,6 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tpl := template.New("article.html")
-	path, _ := os.Getwd()
-	log.Print(path)
-	log.Printf("%+v", box)
 	article, err := box.FindString("article.html")
 	if err != nil {
 		log.Print(err)
@@ -94,9 +87,6 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 
 func RenderArticleForm(w http.ResponseWriter, r *http.Request) {
 	tpl := template.New("new-article.html")
-	path, _ := os.Getwd()
-	log.Print(path)
-	log.Printf("%+v", box)
 	articleForm, err := box.FindString("new-article.html")
 	if err != nil {
 		log.Print(err)

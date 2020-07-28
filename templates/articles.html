@@ -11,6 +11,16 @@
     <li>
       <a href="/article/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
     </li>
-{{ end }}
+    {{ end }}
+
+  <form action="/articles/export" method="POST" target="_blank">
+    <input type="hidden" id="exportType" name="exportType" value="pdf">
+    <input type="submit">
+  </form>
+
+  <form action="/articles/export" method="POST" target="_blank">
+    <input type="hidden" id="exportType" name="exportType" value="csv">
+    <input type="submit">
+  </form>
 </body>
 </html>
