@@ -13,8 +13,8 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 	switch name {
 	case "csv":
 		strategyType = &strategies.ExportCsv{}
-	case "pdf":
-		strategyType = &strategies.ExportPdf{}
+	case "xls":
+		strategyType = &strategies.ExportXls{}
 	}
 
 	context := &strategies.Context{}
