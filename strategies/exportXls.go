@@ -6,6 +6,8 @@ import (
 
 type ExportXls struct{}
 
-func (e *ExportXls) export(c *Context) {
+func (e *ExportXls) export(c *Context, data []byte) error {
 	log.Printf("Export as Xls")
+
+	return nil
 }
