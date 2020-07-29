@@ -39,8 +39,8 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename%s=", b.FileName))
-	w.Header().Set("Content-Type", r.Header.Get(b.MimeType))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", b.FileName))
+	w.Header().Set("Content-Type", b.MimeType)
 	w.Write(b.FileByte)
 
 	return

@@ -1,7 +1,7 @@
 package strategies
 
 import (
-	"encoding/json"
+	"bytes"
 	"fmt"
 	"github.com/tealeg/xlsx/v3"
 	"gokipedia/models"
@@ -12,6 +12,7 @@ import (
 type ExportXls struct{}
 
 func (e *ExportXls) export(c *Context, articles []*models.Article) (*ArticleExport, error) {
+	var b bytes.Buffer
 	file := xlsx.NewFile()
 	sheet, err := createSheet(file)
 	if err != nil {
@@ -22,15 +23,12 @@ func (e *ExportXls) export(c *Context, articles []*models.Article) (*ArticleExpo
 		hydrateRows(article, sheet)
 	}
 
-	byteArray, err := json.Marshal(&file)
-	if err != nil {
-		return nil, fmt.Errorf("could not marshal struct: %v", err)
-	}
+	file.Write(&b)
 
 	return &ArticleExport{
 		FileName: "articles.xlsx",
 		MimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-		FileByte: byteArray,
+		FileByte: b.Bytes(),
 	}, nil
 }
 
