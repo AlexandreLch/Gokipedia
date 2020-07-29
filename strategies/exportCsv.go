@@ -2,10 +2,8 @@ package strategies
 
 import "fmt"
 
-type ExportCsv struct {
-	Name string
-}
+type ExportCsv struct {}
 
-func(e *ExportCsv) export(){
+func(e *ExportCsv) export(c *Context){
 	fmt.Printf("Export as CSV")
 }

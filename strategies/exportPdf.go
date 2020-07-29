@@ -2,10 +2,8 @@ package strategies
 
 import "fmt"
 
-type ExportPdf struct {
-	Name string
-}
+type ExportPdf struct {}
 
-func(e *ExportPdf) export(){
-	fmt.Printf("Export as CSV")
+func(e *ExportPdf) export(c *Context){
+	fmt.Printf("Export as PDF")
 }

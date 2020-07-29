@@ -1,5 +1,5 @@
 package strategies
 
 type ExportStrategy interface{
-	export()
+	export(c *Context)
 }
