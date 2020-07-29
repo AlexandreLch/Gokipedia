@@ -9,7 +9,7 @@
   <h1>Ceci est la liste de tous les articles</h1>
     {{ range $key, $value := . }}
     <li>
-      <a href="/article/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
+      <a href="/articles/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
     </li>
     {{ end }}
 
