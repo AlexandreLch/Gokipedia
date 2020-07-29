@@ -9,8 +9,18 @@
   <h1>Ceci est la liste de tous les articles</h1>
     {{ range $key, $value := . }}
     <li>
-      <a href="/article/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
+      <a href="/articles/{{ $value.ID }}"><strong>{{ $key }}</strong>: {{ $value.Title }}</a>
     </li>
-{{ end }}
+    {{ end }}
+
+  <form action="/articles/export" method="POST" target="_blank">
+    <input type="hidden" id="exportType" name="exportType" value="xls">
+    <input type="submit" value="xls">
+  </form>
+
+  <form action="/articles/export" method="POST" target="_blank">
+    <input type="hidden" id="exportType" name="exportType" value="csv">
+    <input type="submit" value="csv">
+  </form>
 </body>
 </html>

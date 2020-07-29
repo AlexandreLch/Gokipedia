@@ -59,6 +59,12 @@ var routes = Routes{
 		HandlerFunc: controllers.SaveArticle,
 	},
 	Route{
+		Name:        "Export articles",
+		Method:      "POST",
+		Pattern:     "/articles/export",
+		HandlerFunc: controllers.ExportArticles,
+	},
+	Route{
 		Name:        "Get an article",
 		Method:      "GET",
 		Pattern:     "/articles/{id}",
