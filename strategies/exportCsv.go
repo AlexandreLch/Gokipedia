@@ -1,9 +1,11 @@
 package strategies
 
-import "fmt"
+import (
+	"log"
+)
 
-type ExportCsv struct {}
+type ExportCsv struct{}
 
-func(e *ExportCsv) export(c *Context){
-	fmt.Printf("Export as CSV")
+func (e *ExportCsv) export(c *Context) {
+	log.Printf("Export as CSV")
 }

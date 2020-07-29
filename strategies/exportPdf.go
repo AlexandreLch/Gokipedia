@@ -1,9 +1,11 @@
 package strategies
 
-import "fmt"
+import (
+	"log"
+)
 
-type ExportPdf struct {}
+type ExportPdf struct{}
 
-func(e *ExportPdf) export(c *Context){
-	fmt.Printf("Export as PDF")
+func (e *ExportPdf) export(c *Context) {
+	log.Printf("Export as PDF")
 }

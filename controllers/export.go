@@ -1,18 +1,16 @@
 package controllers
 
-import(
-	"net/http"
-	"log"
+import (
 	"gokipedia/strategies"
+	"net/http"
 )
 
 func ExportArticles(w http.ResponseWriter, r *http.Request) {
 	name := r.PostFormValue("exportType")
-	log.Printf("%+v", name)
 
 	var strategyType strategies.ExportStrategy
 
-	switch(name){
+	switch name {
 	case "csv":
 		strategyType = &strategies.ExportCsv{}
 	case "pdf":
@@ -21,11 +19,8 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 
 	context := &strategies.Context{}
 	context.SetExportStrategy(strategyType)
-	context.Export()
 
-	for key, value := range r.PostForm{
-		log.Printf("\n%s = %s\n", key, value)
-	}
+	context.Export()
 
 	return
 }
