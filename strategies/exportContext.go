@@ -2,6 +2,7 @@ package strategies
 
 import (
 	"fmt"
+	"gokipedia/models"
 )
 
 type Context struct {
@@ -12,8 +13,8 @@ func (c *Context) SetExportStrategy(e ExportStrategy) {
 	c.strategy = e
 }
 
-func (c *Context) Export(data [][]string) (*ArticleExport, error) {
-	file, err := c.strategy.export(c, data)
+func (c *Context) Export(articles []*models.Article) (*ArticleExport, error) {
+	file, err := c.strategy.export(c, articles)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't export: %v", err)
 	}

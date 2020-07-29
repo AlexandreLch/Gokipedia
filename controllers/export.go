@@ -7,7 +7,6 @@ import (
 	"gokipedia/strategies"
 	"log"
 	"net/http"
-	"time"
 )
 
 func ExportArticles(w http.ResponseWriter, r *http.Request) {
@@ -34,15 +33,7 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data [][]string
-	for _, article := range articles {
-		var articleArr []string
-		articleArr = append(articleArr, string(article.ID), article.Title, article.Authors,
-			article.Header, article.CreatedOn.Format(time.RFC3339), article.UpdatedOn.Format(time.RFC3339))
-		data = append(data, articleArr)
-	}
-
-	b, err := context.Export(data)
+	b, err := context.Export(articles)
 	if err != nil {
 		log.Printf("couldn't export: %v", err)
 		return

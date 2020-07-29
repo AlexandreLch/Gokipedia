@@ -1,7 +1,9 @@
 package strategies
 
+import "gokipedia/models"
+
 type ExportStrategy interface {
-	export(*Context, [][]string) (*ArticleExport, error)
+	export(*Context, []*models.Article) (*ArticleExport, error)
 }
 
 type ArticleExport struct {
