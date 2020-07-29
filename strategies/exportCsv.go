@@ -8,20 +8,22 @@ import (
 
 type ExportCsv struct{}
 
-func (e *ExportCsv) export(c *Context, data []byte) error {
-	file, err := os.Create("result.csv")
+func (e *ExportCsv) export(c *Context, data [][]string) (*os.File, error) {
+	file, err := os.Create("./tmp/result.csv")
 	if err != nil {
-		return fmt.Errorf("couldn't create file: %v", err)
+		return nil, fmt.Errorf("couldn't create file: %v", err)
 	}
 	defer file.Close()
 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write(data)
-	if err != nil {
-		return fmt.Errorf("couldn't write to file: %v", err)
+	for _, value := range data {
+		err := writer.Write(value)
+		if err != nil {
+			return nil, fmt.Errorf("cannot write to file: %s", err)
+		}
 	}
 
-	return nil
+	return file, nil
 }

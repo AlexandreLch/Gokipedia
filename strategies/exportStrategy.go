@@ -1,5 +1,7 @@
 package strategies
 
+import "os"
+
 type ExportStrategy interface {
-	export(c *Context, data []byte) error
+	export(*Context, [][]string) (*os.File, error)
 }

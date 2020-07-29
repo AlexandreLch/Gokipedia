@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+const dwldPath = "./tmp"
+
 func main() {
 	port := "8080"
 	newRouter := router.NewRouter()
@@ -17,6 +19,9 @@ func main() {
 	}
 
 	log.Print("\nServer started on port " + port)
+
+	newRouter.PathPrefix("/files/").Handler(http.StripPrefix("/files/",
+		http.FileServer(http.Dir(dwldPath))))
 
 	err = http.ListenAndServe(":"+port, newRouter)
 	if err != nil {

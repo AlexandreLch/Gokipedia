@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"gokipedia/database"
 	"gokipedia/models"
 	"gokipedia/strategies"
+	"io"
 	"log"
 	"net/http"
 )
@@ -32,12 +34,36 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data []string
+	var data [][]string
 	for _, article := range articles {
-		data = append(data, string(article))
+		var articleArr []string
+		articleArr = append(articleArr, article.Title, article.Authors, article.Header)
+		data = append(data, articleArr)
 	}
 
-	context.Export([]string{articles})
+	//file, err := context.Export(data)
+	//if err != nil {
+	//	log.Printf("couldn't export: %v", err)
+	//	return
+	//}
+
+	url := "http://localhost:8080/files/result.csv"
+	client := http.Client{}
+
+	resp, err := client.Get(url)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer resp.Body.Close()
+
+	w.Header().Set("Content-Disposition", "attachment; filename=result.csv")
+	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+
+	_, err = io.Copy(w, resp.Body)
+	if err != nil {
+		log.Printf("could not download file: %v", err)
+		return
+	}
 
 	return
 }
