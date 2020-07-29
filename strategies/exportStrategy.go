@@ -5,6 +5,7 @@ type ExportStrategy interface {
 }
 
 type ArticleExport struct {
+	FileName string
 	MimeType string
 	FileByte []byte
 }

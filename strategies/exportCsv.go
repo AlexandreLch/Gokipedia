@@ -20,6 +20,7 @@ func (e *ExportCsv) export(c *Context, data [][]string) (*ArticleExport, error) 
 	}
 
 	return &ArticleExport{
+		FileName: "articles.csv",
 		MimeType: "text/csv",
 		FileByte: b.Bytes(),
 	}, nil
