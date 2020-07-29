@@ -1,7 +1,10 @@
 package strategies
 
-import "os"
-
 type ExportStrategy interface {
-	export(*Context, [][]string) (*os.File, error)
+	export(*Context, [][]string) (*ArticleExport, error)
+}
+
+type ArticleExport struct {
+	MimeType string
+	FileByte []byte
 }

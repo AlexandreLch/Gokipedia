@@ -1,13 +1,12 @@
 package controllers
 
 import (
-	"fmt"
 	"gokipedia/database"
 	"gokipedia/models"
 	"gokipedia/strategies"
-	"io"
 	"log"
 	"net/http"
+	"time"
 )
 
 func ExportArticles(w http.ResponseWriter, r *http.Request) {
@@ -37,33 +36,20 @@ func ExportArticles(w http.ResponseWriter, r *http.Request) {
 	var data [][]string
 	for _, article := range articles {
 		var articleArr []string
-		articleArr = append(articleArr, article.Title, article.Authors, article.Header)
+		articleArr = append(articleArr, string(article.ID), article.Title, article.Authors,
+			article.Header, article.CreatedOn.Format(time.RFC3339), article.UpdatedOn.Format(time.RFC3339))
 		data = append(data, articleArr)
 	}
 
-	//file, err := context.Export(data)
-	//if err != nil {
-	//	log.Printf("couldn't export: %v", err)
-	//	return
-	//}
-
-	url := "http://localhost:8080/files/result.csv"
-	client := http.Client{}
-
-	resp, err := client.Get(url)
+	b, err := context.Export(data)
 	if err != nil {
-		fmt.Println(err)
-	}
-	defer resp.Body.Close()
-
-	w.Header().Set("Content-Disposition", "attachment; filename=result.csv")
-	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
-
-	_, err = io.Copy(w, resp.Body)
-	if err != nil {
-		log.Printf("could not download file: %v", err)
+		log.Printf("couldn't export: %v", err)
 		return
 	}
+
+	w.Header().Set("Content-Disposition", "attachment; filename=result.csv")
+	w.Header().Set("Content-Type", r.Header.Get(b.MimeType))
+	w.Write(b.FileByte)
 
 	return
 }

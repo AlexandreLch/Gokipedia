@@ -1,29 +1,26 @@
 package strategies
 
 import (
+	"bytes"
 	"encoding/csv"
 	"fmt"
-	"os"
 )
 
 type ExportCsv struct{}
 
-func (e *ExportCsv) export(c *Context, data [][]string) (*os.File, error) {
-	file, err := os.Create("./tmp/result.csv")
-	if err != nil {
-		return nil, fmt.Errorf("couldn't create file: %v", err)
-	}
-	defer file.Close()
+func (e *ExportCsv) export(c *Context, data [][]string) (*ArticleExport, error) {
 
-	writer := csv.NewWriter(file)
+	var b bytes.Buffer
+	writer := csv.NewWriter(&b)
 	defer writer.Flush()
 
-	for _, value := range data {
-		err := writer.Write(value)
-		if err != nil {
-			return nil, fmt.Errorf("cannot write to file: %s", err)
-		}
+	err := writer.WriteAll(data)
+	if err != nil {
+		return nil, fmt.Errorf("cannot write to file: %s", err)
 	}
 
-	return file, nil
+	return &ArticleExport{
+		MimeType: "text/csv",
+		FileByte: b.Bytes(),
+	}, nil
 }

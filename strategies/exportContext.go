@@ -2,7 +2,6 @@ package strategies
 
 import (
 	"fmt"
-	"os"
 )
 
 type Context struct {
@@ -13,7 +12,7 @@ func (c *Context) SetExportStrategy(e ExportStrategy) {
 	c.strategy = e
 }
 
-func (c *Context) Export(data [][]string) (*os.File, error) {
+func (c *Context) Export(data [][]string) (*ArticleExport, error) {
 	file, err := c.strategy.export(c, data)
 	if err != nil {
 		return nil, fmt.Errorf("couldn't export: %v", err)
