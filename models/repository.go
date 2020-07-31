@@ -176,3 +176,30 @@ func (repository *Repository) deleteArticle(id uint64) (uint64, error) {
 
 	return uint64(rowsAffected), nil
 }
+
+func (repository *Repository) AddSection(section *Section) error {
+	stmt, err := repository.Conn.Prepare("INSERT INTO section(title, paragraph, position, " +
+		"media, created_on, updated_on) VALUES(?,?,?,?,?,?)")
+	if err != nil {
+		return err
+	}
+
+	section.CreatedOn = time.Now()
+	section.UpdatedOn = time.Now()
+
+	res, errExec := stmt.Exec(section.Title, section.Paragraph, section.Position,
+		section.Media, section.CreatedOn, section.UpdatedOn)
+	if errExec != nil {
+		return fmt.Errorf("could not exec stmt: %v", errExec)
+	}
+
+	lastInsertedID, errInsert := res.LastInsertId()
+
+	if errInsert != nil {
+		return fmt.Errorf("could not retrieve last inserted ID: %v", errInsert)
+	}
+
+	section.ID = uint64(lastInsertedID)
+
+	return nil
+}
