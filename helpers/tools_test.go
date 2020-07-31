@@ -15,5 +15,5 @@ func TestParseUInt64(t *testing.T){
 		fmt.Errorf("could not parse string to int")
 	}
 	
-	g.Expect(stringToUint).To(BeEquivalentTo(5), "String should have become a int")
+	g.Expect(stringToUint).To(BeIdenticalTo(uint64(5)), "String should have become a int")
 }
