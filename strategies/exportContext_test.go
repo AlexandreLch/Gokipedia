@@ -33,5 +33,5 @@ func TestExport(t *testing.T){
 		return
 	}
 
-	g.Expect(b).ShouldNot(BeNil(), "Articles should have transformed to Bytes for Excel")
+	g.Expect(b).ShouldNot(BeNil(), "Articles should have transformed to Bytes")
 }
