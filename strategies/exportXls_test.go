@@ -79,7 +79,7 @@ func TestHydrateRows(t *testing.T) {
 	if err != nil {
 		log.Printf("could not add sheet: %v", err)
 	}
-	
+
 	row2 := sheet.AddRow()
 	row2.AddCell().Value = strconv.FormatUint(article.ID, 10)
 	row2.AddCell().Value = article.Title
