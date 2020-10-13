@@ -11,6 +11,7 @@ type Repository struct {
 	Conn *sql.DB
 }
 
+//GetArticles retrieves all articles from database
 func (repository *Repository) GetArticles() ([]*Article, error) {
 	rows, err := repository.Conn.Query("SELECT a.id, a.title, a.header, a.authors, a.created_on, " +
 		"a.updated_on" +
@@ -50,6 +51,7 @@ func (repository *Repository) GetArticles() ([]*Article, error) {
 	return articles, nil
 }
 
+//GetArticleByID retrieves one article from database
 func (repository *Repository) GetArticleByID(id uint64) (*Article, error) {
 	row := repository.Conn.QueryRow("SELECT a.id, a.title, a.header, a.authors, a.created_on, "+
 		"a.updated_on FROM article a WHERE id=(?)", id)
@@ -73,6 +75,7 @@ func (repository *Repository) GetArticleByID(id uint64) (*Article, error) {
 	}
 }
 
+//GetArticleContentByID retrieves article contents by article id from database
 func (repository *Repository) GetArticleContentByID(id uint64) ([]*Section, error) {
 	rows, err := repository.Conn.Query("SELECT s.id, s.title, s.paragraph, s.position, s.media, "+
 		"s.created_on, s.updated_on, s.parent_id FROM section s WHERE article_id=(?)", id)
@@ -116,6 +119,7 @@ func (repository *Repository) GetArticleContentByID(id uint64) ([]*Section, erro
 	return sections, nil
 }
 
+//SaveArticle saves an article in database
 func (repository *Repository) SaveArticle(article *Article) error {
 	stmt, err := repository.Conn.Prepare("INSERT INTO article(title, header, authors, created_on," +
 		"updated_on) VALUES(?,?,?,?,?)")

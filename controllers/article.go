@@ -13,6 +13,7 @@ import (
 
 var decoder = schema.NewDecoder()
 
+//RenderArticles handler to render all articles
 func RenderArticles(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}
@@ -41,6 +42,7 @@ func RenderArticles(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//RenderArticle handler to render one article
 func RenderArticle(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}
@@ -85,6 +87,7 @@ func RenderArticle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//RenderArticleForm handler to render form to create article
 func RenderArticleForm(w http.ResponseWriter, r *http.Request) {
 	tpl := template.New("new-article.html")
 	articleForm, err := box.FindString("new-article.html")
@@ -104,6 +107,7 @@ func RenderArticleForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//SaveArticle handler to create article from creation form
 func SaveArticle(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}

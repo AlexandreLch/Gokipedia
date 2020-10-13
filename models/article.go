@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+//Article is a wiki article model
 type Article struct {
 	ID        uint64     `json:"id"`
 	Title     string     `json:"title"`

@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+//Section is an article section model ( creates article content )
 type Section struct {
 	ID        uint64    `json:"id"`
 	Title     string    `json:"title"`

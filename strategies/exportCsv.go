@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+//ExportCsv is the csv export strategy type
 type ExportCsv struct{}
 
 func (e *ExportCsv) export(c *Context, articles []*models.Article) (*ArticleExport, error) {

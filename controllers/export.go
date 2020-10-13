@@ -9,6 +9,7 @@ import (
 	"net/http"
 )
 
+//ExportArticles handler to export articles as either csv or xls
 func ExportArticles(w http.ResponseWriter, r *http.Request) {
 	db := database.DbConn
 	repository := models.Repository{Conn: db}
