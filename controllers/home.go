@@ -10,8 +10,9 @@ import (
 
 var box = packr.New("templateBox", "../templates")
 
+//RenderHome handler to render home page
 func RenderHome(w http.ResponseWriter, r *http.Request) {
-	message := models.Message{Greeting: "Yo frr"}
+	message := models.Message{Greeting: "Bonjour!"}
 	tpl := template.New("home.html") // Create a template.
 	home, err := box.FindString("home.html")
 	if err != nil {

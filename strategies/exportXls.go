@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+//ExportXls is the xls export strategy type
 type ExportXls struct{}
 
 func (e *ExportXls) export(c *Context, articles []*models.Article) (*ArticleExport, error) {

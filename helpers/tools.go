@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-// ParseInt64 helper to avoid code repetition
+// ParseUInt64 helper to avoid code repetition
 func ParseUInt64(stringToParse string) (uint64, error) {
 	intID, err := strconv.ParseInt(stringToParse, 10, 64)
 	if err != nil {
