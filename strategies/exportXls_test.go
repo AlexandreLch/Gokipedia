@@ -1,17 +1,17 @@
 package strategies
 
 import (
-	. "github.com/onsi/gomega"
-	"gokipedia/models"
 	"bytes"
+	. "github.com/onsi/gomega"
 	"github.com/tealeg/xlsx/v3"
-	"testing"
+	"gokipedia/models"
 	"log"
-	"time"
 	"strconv"
+	"testing"
+	"time"
 )
 
-func TestExportXls(t *testing.T){
+func TestExportXls(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var b bytes.Buffer
@@ -23,13 +23,13 @@ func TestExportXls(t *testing.T){
 
 	articles := []*models.Article{
 		&models.Article{
-			ID: 1,
-			Title: "Test",
-			Header: "Test",
-			Authors: "Nous",
+			ID:        1,
+			Title:     "Test",
+			Header:    "Test",
+			Authors:   "Nous",
 			CreatedOn: time.Now(),
-			UpdatedOn:  time.Now(),
-			Sections: nil,
+			UpdatedOn: time.Now(),
+			Sections:  nil,
 		},
 	}
 
@@ -66,13 +66,13 @@ func TestHydrateRows(t *testing.T) {
 	file := xlsx.NewFile()
 
 	article := &models.Article{
-		ID: 1,
-		Title: "Test",
-		Header: "Test",
-		Authors: "Nous",
+		ID:        1,
+		Title:     "Test",
+		Header:    "Test",
+		Authors:   "Nous",
 		CreatedOn: time.Now(),
-		UpdatedOn:  time.Now(),
-		Sections: nil,
+		UpdatedOn: time.Now(),
+		Sections:  nil,
 	}
 
 	sheet, err := file.AddSheet("dinosaurs")
