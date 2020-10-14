@@ -1,16 +1,16 @@
 package strategies
 
 import (
-	. "github.com/onsi/gomega"
-	"gokipedia/models"
 	"bytes"
 	"encoding/csv"
-	"testing"
+	. "github.com/onsi/gomega"
+	"gokipedia/models"
 	"log"
+	"testing"
 	"time"
 )
 
-func TestExportCsv(t *testing.T){
+func TestExportCsv(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	var b bytes.Buffer
@@ -19,13 +19,13 @@ func TestExportCsv(t *testing.T){
 
 	articles := []*models.Article{
 		&models.Article{
-			ID: 1,
-			Title: "Test",
-			Header: "Test",
-			Authors: "Nous",
+			ID:        1,
+			Title:     "Test",
+			Header:    "Test",
+			Authors:   "Nous",
 			CreatedOn: time.Now(),
-			UpdatedOn:  time.Now(),
-			Sections: nil,
+			UpdatedOn: time.Now(),
+			Sections:  nil,
 		},
 	}
 

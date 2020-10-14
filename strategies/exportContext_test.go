@@ -3,13 +3,12 @@ package strategies
 import (
 	. "github.com/onsi/gomega"
 	"gokipedia/models"
-	"testing"
 	"log"
+	"testing"
 	"time"
 )
 
-
-func TestExport(t *testing.T){
+func TestExport(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	context := Context{}
@@ -17,13 +16,13 @@ func TestExport(t *testing.T){
 
 	articles := []*models.Article{
 		&models.Article{
-			ID: 1,
-			Title: "Test",
-			Header: "Test",
-			Authors: "Nous",
+			ID:        1,
+			Title:     "Test",
+			Header:    "Test",
+			Authors:   "Nous",
 			CreatedOn: time.Now(),
-			UpdatedOn:  time.Now(),
-			Sections: nil,
+			UpdatedOn: time.Now(),
+			Sections:  nil,
 		},
 	}
 
